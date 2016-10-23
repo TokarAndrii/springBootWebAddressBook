@@ -1,0 +1,57 @@
+body {
+    padding: 10px;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+}
+
+table.sortable thead {
+    background-color: #eee;
+    color: #666666;
+    font-weight: bold;
+    cursor: default;
+}
+
+#userBookContainer {
+
+    width: auto;
+    margin-left: 10%;
+    margin-right: 5%;
+    margin-top: 30px;
+}
+
+#userCabinetNav {
+
+    max-width: 60%;
+    margin-left: 10%;
+    margin-left: 10%;
+    padding-top: 10px;
+    padding-left: 20px;
+
+}
+
+#userCabinetNav li {
+    display: inline;
+    font-weight: bold;
+
+    padding-right: 20px;
+
+}
+
+#logOfLi{
+    padding-left: 40%;
+}
+
+#userCabinetNav {
+    list-style-type: none;
+
+}
+
+
+

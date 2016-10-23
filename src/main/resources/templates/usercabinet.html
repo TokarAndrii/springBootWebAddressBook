@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+
+    <link href="../static/css/guru.css"
+          th:href="@{/css/guru.css}" rel="stylesheet" media="screen"/>
+
+    <title>User Cabinet</title>
+</head>
+<body>
+<div class="row">
+    <nav class="navbar navbar-default" id="userCabinetNav">
+
+
+        <ul id="userNavButtonDivUl">
+            <li><a href="#">Add contact</a></li>
+            <li><a href="#">Update contact</a></li>
+            <li><a href="#">Change contact</a></li>
+            <li><a href="#">Delete contact</a></li>
+            <li id="logOfLi"><a href="#" th:href="@{/}"><span class="fa fa-sign-out" aria-hidden="true"></span>
+                Sign Off</a></li>
+        </ul>
+
+
+    </nav>
+</div>
+
+
+<section>
+    <div id="userBookContainer">
+        <table id="userBook" class="sortable">
+            <thead>
+            <tr>
+                <th>№</th>
+                <th>First Name</th>
+                <th>Second Name</th>
+                <th>Fathers Name</th>
+                <th>Mobile phone number</th>
+                <th>Home phone number</th>
+                <th>Address</th>
+                <th>E-mail</th>
+                <th>select <input type="checkbox" id="checkBoxTableSFCRow"/></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td>Andrii</td>
+                <td>Tokar</td>
+                <td>Olegovich</td>
+                <td>+380(97)3958738</td>
+                <td>+380(44)2576631</td>
+                <td>Holosiivskiy av. 110</td>
+                <td>tokar.andrii@gmail.com</td>
+                <td>select <input type="checkbox"/></td>
+
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Aliona</td>
+                <td>Tokar</td>
+                <td>Anatoliivna</td>
+                <td>+380(97)3948739</td>
+                <td>+380(44)2576631</td>
+                <td>Holosiivskiy av. 110</td>
+                <td>aliona.tokar@gmail.com</td>
+                <td>select <input type="checkbox"/></td>
+            </tr>
+            </tbody>
+
+
+        </table>
+    </div>
+</section>
+
+
+<script type="text/javascript" src="../static/js/sorttable.js"
+        th:src="@{/js/sorttable.js}"></script>
+
+
+</body>
+</html>
