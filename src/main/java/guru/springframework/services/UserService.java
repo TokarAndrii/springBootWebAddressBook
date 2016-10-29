@@ -13,6 +13,8 @@ public interface UserService {
 
     User getUserById(long userId);
 
+    User findUserByName(String name);
+
     Contact addContact(String firstName, String secondName, String fathersName, String mobilePhoneNumber,
                        String homePhoneNumber, String homeAddress, String email, long userId);
 

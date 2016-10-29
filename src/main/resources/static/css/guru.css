@@ -53,5 +53,17 @@ table.sortable thead {
 
 }
 
+#addContactForm .col-sm-10{
+width:45% ;
+}
+
+#addContactForm label{
+width: 25%;
+}
+
+.addContactForm .col-sm-offset-2{
+    padding-left: 10%;
+}
+
 
 

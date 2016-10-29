@@ -6,9 +6,14 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User extends IdEntity {
+public class User {
 
-    @Column(name = "login", nullable = false)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column
+    private long id;
+
+    @Column(name = "login", nullable = false, unique = true)
     @Size(min = 3)
     private String login;
 
@@ -29,10 +34,17 @@ public class User extends IdEntity {
     public User() {
     }
 
-    public User(String login, String password, String firstNameLastNameFathersName) {
+    public User(String login, String password, String fullName) {
         this.login = login;
         this.password = password;
-        fullName = firstNameLastNameFathersName;
+        this.fullName = fullName;
+    }
+
+    public User(String login, String password, String fullName, Set<Contact> contacts) {
+        this.login = login;
+        this.password = password;
+        this.fullName = fullName;
+        this.contacts = contacts;
     }
 
     public Set<Contact> getContacts() {
@@ -67,11 +79,33 @@ public class User extends IdEntity {
         this.fullName = fullName;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "login='" + login + '\'' +
                 ", fullName='" + fullName + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+
+        return id == user.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (id ^ (id >>> 32));
     }
 }

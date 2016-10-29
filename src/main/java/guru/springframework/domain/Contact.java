@@ -7,7 +7,12 @@ import javax.validation.constraints.Size;
 // id @Table
 @Entity
 @Table(name = "contacts")
-public class Contact extends IdEntity {
+public class Contact {
+
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
     @Column(name = "firstName", nullable = false)
     @Size(min = 4)
@@ -123,6 +128,14 @@ public class Contact extends IdEntity {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     @Override

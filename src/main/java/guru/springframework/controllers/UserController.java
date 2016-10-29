@@ -4,11 +4,19 @@ import guru.springframework.domain.Contact;
 import guru.springframework.domain.User;
 import guru.springframework.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 @Controller
@@ -21,54 +29,93 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping("user/new")
+    @RequestMapping("/user/register")
     public String registerUser(Model model) {
         model.addAttribute("user", new User());
-
         return "registeruser";
-
     }
 
 
-    @RequestMapping(value = "user", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/login", method = RequestMethod.GET)
+    public String userLogin(Model model) {
+        /*User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();*/
+
+        model.addAttribute("user", new User());
+        return "loginformuser";
+    }
+
+    @RequestMapping(value = "/save/contact", method = RequestMethod.POST)
+    public String saveContact(Contact contact) {
+
+
+        String firstName = contact.getFirstName();
+        String secondName = contact.getSecondName();
+        String fathersName = contact.getFathersName();
+        String mobilePhoneNumber = contact.getMobilePhoneNumber();
+        String homePhoneNumber = contact.getHomePhoneNumber();
+        String address = contact.getHomeAddress();
+        String email = contact.getEmail();
+
+
+        userService.addContact(firstName, secondName, fathersName,
+                mobilePhoneNumber, homePhoneNumber, address, email, 0);
+
+        return "usercabinet";
+
+    }
+
+    //TODOO user.getId for saving contact
+    @RequestMapping(value = "/user/save", method = RequestMethod.POST)
     public String saveUser(User user) {
-        userService.registerUser(user.getFullName(), user.getLogin(), user.getPassword());
-        return "redirect:/user/" + user.getId();
+
+        String fullName = user.getFullName();
+        String login = user.getLogin();
+        String password = user.getPassword();
+
+        userService.registerUser(fullName, login, password);
+        /*return "redirect:/user/" + user.getId();*/
+        return "loginformuser";
     }
 
-    @RequestMapping("user/{id}")
-    public String showUser(@PathVariable Integer id, Model model) {
+    @RequestMapping("/user/{id}")
+    public String showUser(@PathVariable Long id, Model model) {
         model.addAttribute("user", userService.getUserById(id));
         return "usershow";
     }
 
-    @RequestMapping("userlogin")
-    public String userLogin(Model model) {
-        //TODO LOGIN LOGIC
 
-        return "userlogin";
-    }
-
-    @RequestMapping("addcontact/new")
+    @RequestMapping("/contact/new")
     public String addContact(Model model) {
         model.addAttribute("contact", new Contact());
-
         return "addcontact";
     }
 
-    //TODOO user.getId for saving contact
 
-    @RequestMapping(value = "contact", method = RequestMethod.POST)
-    public String saveContact(Contact contact) {
-        userService.addContact(contact.getFirstName(),contact.getSecondName(),
-                contact.getFathersName(),contact.getMobilePhoneNumber(),contact.getHomePhoneNumber(),
-                contact.getHomeAddress(),contact.getEmail(),0);
-        return "redirect:/user/" + contact.getId();
+    @RequestMapping("/usercabinet")
+    public String userCabinet(Model model) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String fullName = user.getFullName();
+        model.addAttribute(fullName);
+
+        return "usercabinet";
     }
 
-    @RequestMapping("usercabinet")
-    public String userCabinet(){
+
+    @RequestMapping(value = "/contacts", method = RequestMethod.GET)
+    public String list(Model model) {
+        model.addAttribute("contacts", userService.findAllContacts());
         return "usercabinet";
+    }
+
+
+
+    @RequestMapping(value="/logout", method = RequestMethod.GET)
+    public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null){
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+        return "redirect:/";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
     }
 
 

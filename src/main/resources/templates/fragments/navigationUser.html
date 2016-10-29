@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head lang="en">
+
+</head>
+<body>
+<div class="container">
+    <div class="row" th:fragment="navigationUser">
+        <nav class="navbar navbar-default" id="userCabinetNav">
+
+
+            <ul id="userNavButtonDivUl">
+                <li><a href="#" th:href="@{/contact/new}">Add contact</a></li>
+                <li><a href="#">Update contact</a></li>
+
+                <li><a href="#">Delete contact</a></li>
+                <li id="logOfLi"><a href="#" th:href="@{/}"><span class="fa fa-sign-out" aria-hidden="true"></span>
+                    Sign Off</a></li>
+            </ul>
+
+
+        </nav>
+    </div>
+
+</div>
+
+
+</body>
+</html>
