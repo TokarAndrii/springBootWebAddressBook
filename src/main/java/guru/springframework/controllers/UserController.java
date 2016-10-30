@@ -122,12 +122,11 @@ public class UserController {
         return "redirect:/";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
     }
 
-    @RequestMapping(value = "/contact/delete/{id}")
-    public String deleteContact(@PathVariable long id) {
-        /*Contact found = userService.findContactById(id);*/
+   /* @RequestMapping(value = "/contact/delete/{id}")
+    public String deleteContact(@PathVariable("id") long id) {
+        Contact found = userService.findContactById(id);
         userService.deleteContact(id);
-        return "usercabinet";
-    }
-
+        return "redirect:/usercabinet";
+    }*/
 
 }

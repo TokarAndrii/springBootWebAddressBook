@@ -138,8 +138,7 @@ public class UserServiceImpl implements UserService {
     public Iterable<Contact> findContactsByUserId(long userId) {
 
         Iterable<Contact> allContacts = findAllContacts();
-                //findAllContacts();
-        //Iterable<Contact> contactsUser;
+
         ArrayList<Contact> contactsUser = new ArrayList<>();
         for (Contact contact : allContacts) {
             if (contact.getUser().getId() == userId) {
