@@ -20,7 +20,7 @@ public interface UserService {
 
     Iterable<Contact> findAllContacts();
 
-    boolean deleteContact(Contact contact);
+    boolean deleteContact(long idContact);
 
     Contact findContactById(long contactId);
 
@@ -29,5 +29,7 @@ public interface UserService {
     Contact findContactBySecondName(String secondName);
 
     Contact findContactByFuthersName(String futhersName);
+
+    Iterable<Contact> findContactsByUserId(long userId);
 
 }

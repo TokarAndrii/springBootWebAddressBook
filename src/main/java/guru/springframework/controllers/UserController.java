@@ -3,6 +3,7 @@ package guru.springframework.controllers;
 import guru.springframework.domain.Contact;
 import guru.springframework.domain.User;
 import guru.springframework.services.UserService;
+import guru.springframework.utils.UserInSystemFinder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,8 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -56,15 +55,19 @@ public class UserController {
         String address = contact.getHomeAddress();
         String email = contact.getEmail();
 
+        UserInSystemFinder userInSystemFinder = new UserInSystemFinder();
+        userInSystemFinder.setUserService(userService);
+        long userId = userInSystemFinder.userInSystem();
+
 
         userService.addContact(firstName, secondName, fathersName,
-                mobilePhoneNumber, homePhoneNumber, address, email, 0);
+                mobilePhoneNumber, homePhoneNumber, address, email, userId);
 
         return "usercabinet";
 
     }
 
-    //TODOO user.getId for saving contact
+
     @RequestMapping(value = "/user/save", method = RequestMethod.POST)
     public String saveUser(User user) {
 
@@ -93,9 +96,10 @@ public class UserController {
 
     @RequestMapping("/usercabinet")
     public String userCabinet(Model model) {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+       /* User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String fullName = user.getFullName();
-        model.addAttribute(fullName);
+        model.addAttribute(fullName);*/
+
 
         return "usercabinet";
     }
@@ -103,19 +107,35 @@ public class UserController {
 
     @RequestMapping(value = "/contacts", method = RequestMethod.GET)
     public String list(Model model) {
-        model.addAttribute("contacts", userService.findAllContacts());
+        //model.addAttribute("contacts", userService.findAllContacts());
+
+        UserInSystemFinder userInSystemFinder = new UserInSystemFinder();
+        userInSystemFinder.setUserService(userService);
+        Long foundId = userInSystemFinder.userInSystem();
+
+
+        /*UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User found = userService.findUserByName(userDetails.getUsername());
+        Long foundId = found.getId();*/
+        model.addAttribute("contacts", userService.findContactsByUserId(foundId));
         return "usercabinet";
     }
 
 
-
-    @RequestMapping(value="/logout", method = RequestMethod.GET)
-    public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null){
+        if (auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
         return "redirect:/";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
+    }
+
+    @RequestMapping(value = "/contact/delete/{id}")
+    public String deleteContact(@PathVariable long id) {
+        /*Contact found = userService.findContactById(id);*/
+        userService.deleteContact(id);
+        return "usercabinet";
     }
 
 

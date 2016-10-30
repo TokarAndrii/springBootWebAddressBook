@@ -8,6 +8,7 @@ import guru.springframework.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -76,15 +77,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean deleteContact(Contact contact) {
-        Contact found = null;
-        if (contact != null) {
+    public boolean deleteContact(long idContact) {
 
-            found = contactRepository.findOne(contact.getId());
+        if (idContact != 0) {
+            Contact found = contactRepository.findOne(idContact);
             if (found != null) {
                 contactRepository.delete(found);
+                return true;
             }
         }
+
         return false;
     }
 
@@ -116,7 +118,7 @@ public class UserServiceImpl implements UserService {
         if (users != null) {
             User found = null;
             for (User user : users) {
-                if (user.getFullName() == secondName) {
+                if (user.getLogin().equals(secondName)) {
                     found = user;
                     return found;
                 }
@@ -129,6 +131,27 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Contact findContactByFuthersName(String futhersName) {
+        return null;
+    }
+
+
+    public Iterable<Contact> findContactsByUserId(long userId) {
+
+        Iterable<Contact> allContacts = findAllContacts();
+                //findAllContacts();
+        //Iterable<Contact> contactsUser;
+        ArrayList<Contact> contactsUser = new ArrayList<>();
+        for (Contact contact : allContacts) {
+            if (contact.getUser().getId() == userId) {
+
+                contactsUser.add(contact);
+            }
+        }
+
+        if (contactsUser != null && contactsUser.size() > 0) {
+            return contactsUser;
+        }
+
         return null;
     }
 
