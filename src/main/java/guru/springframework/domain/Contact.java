@@ -3,8 +3,7 @@ package guru.springframework.domain;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 
-// todo little first char
-// id @Table
+
 @Entity
 @Table(name = "contacts")
 public class Contact {

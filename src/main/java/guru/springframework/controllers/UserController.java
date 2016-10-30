@@ -37,7 +37,6 @@ public class UserController {
 
     @RequestMapping(value = "/user/login", method = RequestMethod.GET)
     public String userLogin(Model model) {
-        /*User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();*/
 
         model.addAttribute("user", new User());
         return "loginformuser";
@@ -76,7 +75,6 @@ public class UserController {
         String password = user.getPassword();
 
         userService.registerUser(fullName, login, password);
-        /*return "redirect:/user/" + user.getId();*/
         return "loginformuser";
     }
 
@@ -96,10 +94,6 @@ public class UserController {
 
     @RequestMapping("/usercabinet")
     public String userCabinet(Model model) {
-       /* User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String fullName = user.getFullName();
-        model.addAttribute(fullName);*/
-
 
         return "usercabinet";
     }
@@ -107,16 +101,13 @@ public class UserController {
 
     @RequestMapping(value = "/contacts", method = RequestMethod.GET)
     public String list(Model model) {
-        //model.addAttribute("contacts", userService.findAllContacts());
+
 
         UserInSystemFinder userInSystemFinder = new UserInSystemFinder();
         userInSystemFinder.setUserService(userService);
         Long foundId = userInSystemFinder.userInSystem();
 
 
-        /*UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User found = userService.findUserByName(userDetails.getUsername());
-        Long foundId = found.getId();*/
         model.addAttribute("contacts", userService.findContactsByUserId(foundId));
         return "usercabinet";
     }
