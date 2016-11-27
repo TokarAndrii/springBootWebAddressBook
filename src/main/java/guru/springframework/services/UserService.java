@@ -18,9 +18,9 @@ public interface UserService {
     Contact addContact(String firstName, String secondName, String fathersName, String mobilePhoneNumber,
                        String homePhoneNumber, String homeAddress, String email, long userId);
 
-    Iterable<Contact> findAllContacts();
+    Iterable<Contact> findAllContacts(long userId);
 
-    boolean deleteContact(long idContact);
+    boolean deleteContact(Contact contact);
 
     Contact findContactById(long contactId);
 

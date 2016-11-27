@@ -18,8 +18,13 @@ public class UserServiceImpl implements UserService {
     private ContactRepository contactRepository;
 
     @Autowired
-    public void setUserRepository(UserRepository userRepository, ContactRepository contactRepository) {
+    public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
+
+    }
+
+    @Autowired
+    public void setContactRepository(ContactRepository contactRepository) {
         this.contactRepository = contactRepository;
     }
 
@@ -69,22 +74,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Iterable<Contact> findAllContacts() {
-        if (contactRepository.findAll() != null) {
+    public Iterable<Contact> findAllContacts(long userId) {
+        /*if (contactRepository.findAll() != null) {
             return contactRepository.findAll();
         }
-        return null;
+        return null;*/
+
+        return contactRepository.findAllUsersContacts(userId);
     }
 
     @Override
-    public boolean deleteContact(long idContact) {
+    public boolean deleteContact(Contact contact) {
 
-        if (idContact != 0) {
-            Contact found = contactRepository.findOne(idContact);
-            if (found != null) {
-                contactRepository.delete(found);
-                return true;
-            }
+        if (contact != null) {
+            //contactRepository.delete(contact);
+            long idContact = contact.getId();
+            contactRepository.deleteOneContact(idContact);
+            return true;
         }
 
         return false;
@@ -137,7 +143,7 @@ public class UserServiceImpl implements UserService {
 
     public Iterable<Contact> findContactsByUserId(long userId) {
 
-        Iterable<Contact> allContacts = findAllContacts();
+        Iterable<Contact> allContacts = findAllContacts(userId);
 
         ArrayList<Contact> contactsUser = new ArrayList<>();
         for (Contact contact : allContacts) {
