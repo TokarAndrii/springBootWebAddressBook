@@ -129,4 +129,38 @@ public class UserController {
         return "redirect:/usercabinet";
     }
 
+    @RequestMapping(value = "/contact/edit/{id}")
+    public String editContact(@PathVariable("id") long id, Model model) {
+        model.addAttribute("contact", userService.findContactById(id));
+
+        return "editcontactform";
+
+    }
+
+    @RequestMapping(value = "/edit/contact", method = RequestMethod.POST)
+    public String editContact(Contact contact) {
+        long idContact = contact.getId();
+
+        String newFirstName = contact.getFirstName();
+
+        String newSecondName = contact.getSecondName();
+        String newFathersName = contact.getFathersName();
+        String newMobilePhoneNumber = contact.getMobilePhoneNumber();
+        String newHomePhoneNumber = contact.getHomePhoneNumber();
+        String newAddress = contact.getHomeAddress();
+        String newEmail = contact.getEmail();
+
+        UserInSystemFinder userInSystemFinder = new UserInSystemFinder();
+        userInSystemFinder.setUserService(userService);
+        long userId = userInSystemFinder.userInSystem();
+
+        userService.changeContact(idContact, newFirstName, newSecondName, newFathersName, newEmail, newAddress,
+                newMobilePhoneNumber, newHomePhoneNumber);
+
+
+        return "usercabinet";
+
+    }
+
+
 }

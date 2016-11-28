@@ -17,4 +17,16 @@ public interface ContactRepository extends CrudRepository<Contact, Long> {
     @Query("DELETE  FROM guru.springframework.domain.Contact  where id=:contactId ")
     void deleteOneContact(@Param("contactId") long contactId);
 
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE guru.springframework.domain.Contact set first_name=:firstName,second_name=:secondName," +
+            "fathers_name=:fathersName,home_address=:homeAddress,email=:email,home_phone_number=:homePhoneNumber," +
+            "mobile_phone_number=:mobilePhoneNumber WHERE id=:contactId")
+    void updateOneContact(@Param("contactId") long contactId, @Param("firstName") String firstName,
+                          @Param("secondName") String secondName, @Param("fathersName") String fathersName,
+                          @Param("email") String email, @Param("homeAddress") String homeAddress,
+                          @Param("homePhoneNumber") String homePhoneNumber,
+                          @Param("mobilePhoneNumber") String mobilePhoneNumber);
+
 }

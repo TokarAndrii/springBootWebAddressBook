@@ -160,5 +160,15 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+    @Override
+    public void changeContact(long idContact, String firstName, String secondName, String fathersName,
+                              String email, String homeAddress, String mobilePhoneNumber, String homePhoneNumber) {
 
+
+        Contact found = contactRepository.findOne(idContact);
+        if (found != null) {
+            contactRepository.updateOneContact(idContact, firstName, secondName, fathersName, email, homeAddress,
+                    homePhoneNumber, mobilePhoneNumber);
+        }
+    }
 }

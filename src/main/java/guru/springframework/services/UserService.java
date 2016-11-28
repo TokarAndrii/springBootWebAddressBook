@@ -32,4 +32,6 @@ public interface UserService {
 
     Iterable<Contact> findContactsByUserId(long userId);
 
+    void changeContact(long idContact,String firstName, String secondName, String fathersName,
+                       String email, String homeAddress, String mobilePhoneNumber, String homePhoneNumber);
 }

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+
+</head>
+<body>
+
+
+<div>
+    <!--/*/ <th:block th:include="fragments/navigationUser :: div"></th:block> /*/-->
+</div>
+
+
+<div class="container">
+
+
+    <div class="editContactForm" id="editContactForm">
+
+
+        <form class="form-horizontal" style="max-width: 80%; padding: 20px" role="form" th:object="${contact}"
+              th:action="@{/edit/contact}" method="post">
+
+
+            <div class="form-group">
+                <label class="control-label col-sm-2">Change contact with id=</label>
+                <div class="col-sm-10">
+                    <input readonly="readonly" type="text" class="form-control" name="id"
+                           placeholder="Contacts ID"
+                           th:field="*{id}"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2">First Name:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="firstName"
+                           placeholder="Enter First Name above 4 chars"
+                           th:field="*{firstName}"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2">Second Name:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="secondName" th:field="*{secondName}"
+                           placeholder="Enter Second Name above 4 chars"/>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="control-label col-sm-2">Fathers Name:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" th:field="*{fathersName}" name="fathersName"
+                           placeholder="Enter Fathers Name above 4 chars"/>
+                </div>
+            </div>
+
+
+            <div class=" form-group">
+                <label class="control-label col-sm-2">Mobile Phone Number:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" th:field="*{mobilePhoneNumber}" name="mobilePhoneNumber"
+                           placeholder="Enter mobile phone number as: +380(XX)XXXXXXX"/>
+                </div>
+            </div>
+
+            <div class=" form-group">
+                <label class="control-label col-sm-2">Home Phone Number:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" th:field="*{homePhoneNumber}"
+                           name="homePhoneNumber"
+                           placeholder="Enter home phone number as: +380(XX)XXXXXXX"/>
+                </div>
+            </div>
+            <div class=" form-group">
+                <label class="control-label col-sm-2">Address:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" th:field="*{homeAddress}" name="address"
+                           placeholder="Enter address"/>
+                </div>
+            </div>
+            <div class=" form-group">
+                <label class="control-label col-sm-2">E-mail:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" th:field="*{email}" name="email"
+                           placeholder="Enter email"/>
+                </div>
+            </div>
+
+
+            <div class=" form-group" id="button">
+
+                <div class="col-sm-offset-2 col-sm-10">
+
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+
+</body>
+</html>
